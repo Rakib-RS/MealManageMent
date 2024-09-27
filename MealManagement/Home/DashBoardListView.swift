@@ -15,61 +15,55 @@ struct DashBoardListView: View {
             List {
                 Section {
                     ForEach(members) { member in
-                        GeometryReader { geometry in
-                            HStack(spacing: 10) {
-                                Text(member.name)
-                                    .frame(width: geometry.size.width * 0.20, alignment: .leading)
-                                    .font(.system(size: 14))
-                                
-                                Text("\(member.totalMeal)")
-                                    .frame(width: geometry.size.width * 0.10, alignment: .trailing)
-                                    .font(.system(size: 14))
-                                
-                                Text(String(format: "%.02f", member.totalBazar))
-                                    .frame(width: geometry.size.width * 0.25, alignment: .trailing)
-                                    .font(.system(size: 14))
-                                
-                                Text(String(format: "%.02f", member.totalMealCost))
-                                    .frame(width: geometry.size.width * 0.25, alignment: .trailing)
-                                    .font(.system(size: 14))
-                                
-                                VStack {
-                                    if member.balance >= 0 {
-                                        Text(String(format: "%.02f", member.balance))
-                                            .foregroundColor(.green)
-                                            .frame(width: geometry.size.width * 0.20, alignment: .trailing)
-                                            .font(.system(size: 14))
-                                    } else {
-                                        Text(String(format: "%.02f", member.balance))
-                                            .foregroundColor(.red)
-                                            .frame(width: geometry.size.width * 0.20, alignment: .trailing)
-                                            .font(.system(size: 14))
-                                    }
-                                }
-                            }
-                            .frame(height: 20) // Adjust the row height as needed
+                        HStack(spacing: 5) {
+                            Text(member.name)
+                                .frame(width: 50, alignment: .leading)
+                                .font(.system(size: 14, weight: .semibold))
+                                .lineLimit(2)
+                            
+                            Text(String(format: "%0.1f", member.totalMeal))
+                                .frame(width: 30, alignment: .trailing)
+                                .font(.system(size: 14))
+                            
+                            Text(String(format: "%0.1f", member.totalBazar))
+                                .frame(width: 70, alignment: .trailing)
+                                .font(.system(size: 14))
+                            
+                            Text(String(format: "%0.1f", member.totalMealCost))
+                                .frame(width: 70, alignment: .trailing)
+                                .font(.system(size: 14))
+                            
+                            Text(String(format: "%0.1f", member.balance))
+                                .frame(width: 70, alignment: .trailing)
+                                .font(.system(size: 14))
+                                .foregroundStyle( member.balance >= 0 ? Color.green : Color.red)
+                            
                         }
-                        .frame(height: 20) // Ensure consistent row height
                     }
                 }
-                //.listRowInsets(EdgeInsets()) // Remove default padding around rows
                 header: {
-                    HStack(alignment: .center, spacing: 10) {
-                        GeometryReader { geometry in
-                            HStack {
-                                Text("Name")
-                                    .frame(width: geometry.size.width * 0.15, alignment: .leading)
-                                Text("Meal")
-                                    .frame(width: geometry.size.width * 0.15, alignment: .trailing)
-                                Text("Bazar")
-                                    .frame(width: geometry.size.width * 0.25, alignment: .trailing)
-                                Text("Meal Cost")
-                                    .frame(width: geometry.size.width * 0.25, alignment: .trailing)
-                                Text("Balance")
-                                    .frame(width: geometry.size.width * 0.20, alignment: .trailing)
-                            }
-                        }
-                        .frame(height: 30) // Adjust header height as needed
+                    HStack(alignment: .center, spacing: 5) {
+                        Text("Name")
+                            .frame(width: 30, alignment: .leading)
+                            .font(.system(size: 14, weight: .semibold))
+                            .lineLimit(2)
+                        
+                        Text("Meals")
+                            .frame(width: 70, alignment: .trailing)
+                            .font(.system(size: 14))
+                        
+                        Text("Bazar")
+                            .frame(width: 70, alignment: .trailing)
+                            .font(.system(size: 14))
+                        
+                        Text("Costs")
+                            .frame(width: 70, alignment: .trailing)
+                            .font(.system(size: 14))
+                        
+                        Text("Balance")
+                            .frame(width: 70, alignment: .trailing)
+                            .font(.system(size: 14))
+                        
                     }
                 }
             }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA1012562CA5DC0D000C35D4 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1012552CA5DC0D000C35D4 /* TestView.swift */; };
 		FA45A3352CA1B0E200043D6C /* MembersDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */; };
 		FA45A3392CA1B33900043D6C /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3382CA1B33900043D6C /* AddMemberView.swift */; };
 		FA45A33B2CA1B8A000043D6C /* DashBoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */; };
@@ -16,6 +15,7 @@
 		FA45A3432CA1D40100043D6C /* AddMealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3422CA1D40100043D6C /* AddMealsView.swift */; };
 		FA45A3452CA1DD0800043D6C /* AddBazarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3442CA1DD0800043D6C /* AddBazarView.swift */; };
 		FA45A3472CA1E2DD00043D6C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3462CA1E2DD00043D6C /* GridView.swift */; };
+		FA83A22E2CA72C600041B505 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A22D2CA72C600041B505 /* ToastView.swift */; };
 		FAA37BDE2CA32B9C003243A0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA37BDD2CA32B9C003243A0 /* Model.swift */; };
 		FABBBEC52CA06D1500046225 /* MealManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBEC42CA06D1500046225 /* MealManagementApp.swift */; };
 		FABBBEC72CA06D1500046225 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBEC62CA06D1500046225 /* MainView.swift */; };
@@ -27,7 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FA1012552CA5DC0D000C35D4 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersDetailsView.swift; sourceTree = "<group>"; };
 		FA45A3382CA1B33900043D6C /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardListView.swift; sourceTree = "<group>"; };
@@ -36,6 +35,7 @@
 		FA45A3422CA1D40100043D6C /* AddMealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealsView.swift; sourceTree = "<group>"; };
 		FA45A3442CA1DD0800043D6C /* AddBazarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBazarView.swift; sourceTree = "<group>"; };
 		FA45A3462CA1E2DD00043D6C /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		FA83A22D2CA72C600041B505 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		FAA37BDD2CA32B9C003243A0 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		FABBBEC12CA06D1500046225 /* MealManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABBBEC42CA06D1500046225 /* MealManagementApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealManagementApp.swift; sourceTree = "<group>"; };
@@ -65,6 +65,7 @@
 				FA45A3442CA1DD0800043D6C /* AddBazarView.swift */,
 				FA45A33E2CA1D15300043D6C /* AddTransactionView.swift */,
 				FA45A3422CA1D40100043D6C /* AddMealsView.swift */,
+				FA83A22D2CA72C600041B505 /* ToastView.swift */,
 			);
 			path = AddTransaction;
 			sourceTree = "<group>";
@@ -85,7 +86,6 @@
 				FABBBED22CA072C100046225 /* DashBoardView.swift */,
 				FA45A33C2CA1B98500043D6C /* DashBoardSummaryView.swift */,
 				FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */,
-				FA1012552CA5DC0D000C35D4 /* TestView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -212,9 +212,9 @@
 				FABBBED72CA08BC800046225 /* MealManager.swift in Sources */,
 				FA45A3392CA1B33900043D6C /* AddMemberView.swift in Sources */,
 				FA45A3472CA1E2DD00043D6C /* GridView.swift in Sources */,
+				FA83A22E2CA72C600041B505 /* ToastView.swift in Sources */,
 				FABBBED32CA072C100046225 /* DashBoardView.swift in Sources */,
 				FABBBEC72CA06D1500046225 /* MainView.swift in Sources */,
-				FA1012562CA5DC0D000C35D4 /* TestView.swift in Sources */,
 				FA45A3452CA1DD0800043D6C /* AddBazarView.swift in Sources */,
 				FAA37BDE2CA32B9C003243A0 /* Model.swift in Sources */,
 				FABBBED52CA0892300046225 /* MembersView.swift in Sources */,

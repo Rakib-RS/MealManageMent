@@ -12,33 +12,51 @@ struct AddMealsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var date: Date = Date()
+    @State private var isOneSelected: Bool = true
     
     var dateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM"
-            return formatter
-        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM"
+        return formatter
+    }
     
     var body: some View {
         
         let calendar = Calendar.current
-                let day = calendar.component(.day, from: date)   // Extract day (dd)
-                let month = calendar.component(.month, from: date)  // Extract month (MM)
+        let day = calendar.component(.day, from: date)   // Extract day (dd)
+        let month = calendar.component(.month, from: date)  // Extract month (MM)
         
         VStack {
             // DatePicker for selecting the date
-                        DatePicker("Select Date", selection: $date, displayedComponents: .date)
-                            .datePickerStyle(CompactDatePickerStyle())
-                            .labelsHidden()
-
-                        // Display the formatted date
-                        Text("Selected Date: \(dateFormatter.string(from: date))")
-                            .font(.headline)
-                            .padding()
+            DatePicker("Select Date", selection: $date, displayedComponents: .date)
+                .datePickerStyle(CompactDatePickerStyle())
+            //.labelsHidden()
+                .padding()
             
-            Text("Day: \(day), Month: \(month)")
-                            .font(.headline)
-                            .padding()
+            // Display the formatted date
+            Text("Selected Date: \(dateFormatter.string(from: date))")
+                .font(.headline)
+                .padding()
+            
+            HStack {
+                Text("InCrement:")
+                
+                HStack {
+                    Text("1")
+                    Image(systemName: isOneSelected ? "largecircle.fill.circle" : "circle")
+                        .onTapGesture {
+                            isOneSelected = true
+                        }
+                }
+                
+                HStack {
+                    Text("0.5")
+                    Image(systemName: !isOneSelected ? "largecircle.fill.circle" : "circle")
+                        .onTapGesture {
+                            isOneSelected = false
+                        }
+                }
+            }
             
             List {
                 ForEach($mealManager.members) { $member in
@@ -55,8 +73,10 @@ struct AddMealsView: View {
                             
                             Button(action: {
                                 if let currentMeals = member.meals[key], currentMeals > 0 {
-                                        member.meals[key] = currentMeals - 1
-                                    }
+                                    var count = currentMeals - (isOneSelected ? 1 : 0.5)
+                                    if count < 0 { count = 0 }
+                                    member.meals[key] = count
+                                }
                             }) {
                                 Image(systemName: "minus.circle")
                                     .foregroundColor(.red)
@@ -65,15 +85,16 @@ struct AddMealsView: View {
                             .buttonStyle(BorderlessButtonStyle())
                             
                             // Display current meal count in the middle
-                            Text("Meals: \(member.meals[key] ?? 0)")
+                            Text("Meals: \(String(format: "%0.1f", member.meals[key] ?? 0))")
                                 .padding(.horizontal)
+                            
                             
                             // Plus button: Increases meal count
                             Button(action: {
                                 if let currentMeals = member.meals[key], currentMeals > 0 {
-                                        member.meals[key] = currentMeals + 1
+                                    member.meals[key] = currentMeals + (isOneSelected ? 1 : 0.5)
                                 } else {
-                                    member.meals[key] = 1
+                                    member.meals[key] = isOneSelected ? 1 : 0.5
                                     
                                 }
                             }) {

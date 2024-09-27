@@ -7,13 +7,6 @@
 
 import Foundation
 
-struct Summary {
-    var totalBazar: Double = 0
-    var totalMeal: Int = 0
-    var mealRate: Double = 0
-}
-
-
 class MealManager: ObservableObject {
     static let shared = MealManager()
     
@@ -22,7 +15,8 @@ class MealManager: ObservableObject {
     var currentMealRate: Double = 0
     
     private var totalBazar: Double = 0
-    private var totalMeal: Int = 0
+    private var totalMeal: Double = 0
+    private var password: String = "honda503"
     
     private static let defaults = UserDefaults.standard
     private static let membersKey = "membersKey"
@@ -63,7 +57,7 @@ class MealManager: ObservableObject {
     private func countMeals() {
         let month = Calendar.current.component(.month, from: Date())
         for i in 0..<members.count {
-            var mealCount = 0;
+            var mealCount = 0.0;
             let member = members[i]
             for j in 1...31 {
                let key = "\(j-month)"
@@ -117,5 +111,21 @@ class MealManager: ObservableObject {
         }
         
         saveInDefault()
+    }
+    
+    func clearMemeberData(password: String) -> Bool {
+        if password != self.password {
+            return false
+        }
+        
+        for i in 0..<members.count {
+            members[i].totalBazar = 0.0
+            members[i].todayMeal = 0.0
+            members[i].meals.removeAll()
+            members[i].totalMeal = 0.0
+        }
+        
+        prepareSummary()
+        return true
     }
 }

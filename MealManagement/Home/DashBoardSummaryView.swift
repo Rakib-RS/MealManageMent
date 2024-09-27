@@ -11,9 +11,9 @@ struct DashBoardSummaryView: View {
     var summary: Summary
     
     var formattedDate: String {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .long
-            return formatter.string(from: Date()) // Current date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: Date()) // Current date
     }
     
     var body: some View {
@@ -39,8 +39,8 @@ struct DashBoardSummaryView: View {
                     Text("Total Bazar:")
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text(summary.totalBazar.description)
-                        .font(.headline)
+                    Text(currency: summary.totalBazar, currencyCode: "BDT", locale: Locale(identifier: "en_BD"))
+                        .font(.title)
                         .foregroundColor(.secondary)
                 }
                 .padding()
@@ -54,8 +54,8 @@ struct DashBoardSummaryView: View {
                     Text("Total Meal:")
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text(summary.totalMeal.description)
-                        .font(.headline)
+                    Text(String(format: "%0.1f", summary.totalMeal))
+                        .font(.title2)
                         .foregroundColor(.secondary)
                 }
                 .padding()
@@ -69,8 +69,8 @@ struct DashBoardSummaryView: View {
                     Text("Current Meal Rate:")
                         .font(.headline)
                         .foregroundColor(.secondary)
-                    Text(summary.mealRate.description)
-                        .font(.headline)
+                    Text(currency: summary.mealRate, currencyCode: "BDT", locale: Locale(identifier: "en_BD"))
+                        .font(.title)
                         .foregroundColor(.secondary)
                 }
                 .padding()
@@ -89,5 +89,19 @@ struct DashBoardSummaryView: View {
 struct DashBoardSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         DashBoardSummaryView(summary: Summary())
+    }
+}
+
+extension Text {
+    init(currency: Double, currencyCode: String = "BDT", locale: Locale = Locale.current) {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currencyCode
+        formatter.locale = locale
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        
+        let formattedString = formatter.string(from: NSNumber(value: currency)) ?? ""
+        self.init(formattedString)
     }
 }
