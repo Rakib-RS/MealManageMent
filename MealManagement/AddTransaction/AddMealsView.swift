@@ -112,7 +112,6 @@ struct AddMealsView: View {
             Spacer()
             // Save Button
             Button(action: {
-                mealManager.prepareSummary()
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Done")

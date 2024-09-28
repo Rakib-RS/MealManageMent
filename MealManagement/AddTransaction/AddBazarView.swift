@@ -74,7 +74,7 @@ struct AddBazarView: View {
                         // Use the number and selected member as needed
                         print("Selected member: \(member.name), Number: \(number)")
                         mealManager.addBazar(id: member.id, amount: number)
-                        mealManager.prepareSummary()
+                        
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {

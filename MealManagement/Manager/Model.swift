@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Member: Identifiable, Codable {
+struct Member: Identifiable, Codable, Equatable {
     var id = UUID()
     var name: String
     var phoneNumber: String
@@ -17,6 +17,17 @@ struct Member: Identifiable, Codable {
     var totalMealCost: Double { return MealManager.shared.currentMealRate * Double(totalMeal) }
     var meals: [String: Double] = [:] //key: day-month
     var balance: Double { return totalBazar - totalMealCost }
+    
+    static func ==(lhs: Member, rhs: Member) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.phoneNumber == rhs.phoneNumber &&
+        lhs.totalBazar == rhs.totalBazar &&
+        lhs.totalMeal == rhs.totalMeal &&
+        lhs.meals == rhs.meals &&
+        lhs.balance == rhs.balance &&
+        lhs.totalMealCost == rhs.totalMealCost
+    }
 }
 
 struct Summary {

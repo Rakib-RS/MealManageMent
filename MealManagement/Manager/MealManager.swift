@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class MealManager: ObservableObject {
     static let shared = MealManager()
@@ -17,6 +18,7 @@ class MealManager: ObservableObject {
     private var totalBazar: Double = 0
     private var totalMeal: Double = 0
     private var password: String = "honda503"
+    private var cancellables = Set<AnyCancellable>()
     
     private static let defaults = UserDefaults.standard
     private static let membersKey = "membersKey"
@@ -28,7 +30,7 @@ class MealManager: ObservableObject {
             self.members = []
         }
         
-        prepareSummary()
+        observeMembers()
     }
     
     func test() {
@@ -36,36 +38,50 @@ class MealManager: ObservableObject {
         members.append(.init(name: "Amzad", phoneNumber: "0145"))
     }
     
-    func prepareSummary() {
-        countMeals()
-        summary = Summary()
-        totalBazar = 0
-        totalMeal = 0
-        
-        members.forEach { member in
-            totalBazar = totalBazar + member.totalBazar
-            totalMeal = totalMeal + member.totalMeal
+    private func prepareSummary() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.countMeals()
+            
+            self.summary = Summary()
+            self.totalBazar = 0
+            self.totalMeal = 0
+            
+            self.members.forEach { member in
+                self.totalBazar = self.totalBazar + member.totalBazar
+                self.totalMeal = self.totalMeal + member.totalMeal
+            }
+            
+            currentMealRate = totalMeal > 0 ? totalBazar/Double(totalMeal) : 0
+            
+            summary.totalBazar = totalBazar
+            summary.totalMeal = totalMeal
+            summary.mealRate = currentMealRate
         }
-        
-        currentMealRate = totalMeal > 0 ? totalBazar/Double(totalMeal) : 0
-        
-        summary.totalBazar = totalBazar
-        summary.totalMeal = totalMeal
-        summary.mealRate = currentMealRate
+    }
+    
+    private func observeMembers() {
+        $members.removeDuplicates().sink { [weak self] _ in
+            print("[mealManager] Members updated")
+            self?.prepareSummary()
+        }.store(in: &cancellables)
     }
     
     private func countMeals() {
         let month = Calendar.current.component(.month, from: Date())
-        for i in 0..<members.count {
-            var mealCount = 0.0;
-            let member = members[i]
-            for j in 1...31 {
-               let key = "\(j-month)"
+        members = members.map { member in
+            var mealCount = 0.0
+            
+            for day in 1...31 {
+                let key = "\(day - month)"
                 if let currentMeals = member.meals[key] {
-                    mealCount = mealCount + currentMeals
+                    mealCount += currentMeals
                 }
             }
-            members[i].totalMeal = mealCount
+            
+            var updatedMember = member
+            updatedMember.totalMeal = mealCount
+            return updatedMember
         }
         
         saveInDefault()
