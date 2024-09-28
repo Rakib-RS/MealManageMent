@@ -16,7 +16,7 @@ struct DashBoardView: View {
             VStack {
                 DashBoardSummaryView(summary: mealManager.summary)
                 Spacer()
-                DashBoardListView(members: $mealManager.members)
+                DashBoardListView(mealManager: mealManager)
             }
             
         }

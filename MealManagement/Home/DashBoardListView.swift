@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct DashBoardListView: View {
-    @Binding var members: [Member]
+    @StateObject var mealManager: MealManager
     
     var body: some View {
         VStack {
             List {
                 Section {
-                    ForEach(members) { member in
+                    ForEach(mealManager.members) { member in
                         HStack(spacing: 5) {
                             Text(member.name)
                                 .frame(width: 50, alignment: .leading)
@@ -75,6 +75,6 @@ struct DashBoardListView: View {
 
 struct DashBoardListView_Previews: PreviewProvider {
     static var previews: some View {
-        DashBoardListView(members: .constant([Member(name: "John Doe", phoneNumber: "123456789")]))
+        DashBoardListView(mealManager: MealManager.shared)
     }
 }

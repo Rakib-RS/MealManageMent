@@ -13,7 +13,7 @@ class MealManager: ObservableObject {
     
     @Published var members: [Member]
     @Published var summary: Summary = Summary()
-    var currentMealRate: Double = 0.0
+    @Published var currentMealRate: Double = 0.0
     
     private var totalBazar: Double = 0
     private var totalMeal: Double = 0
@@ -29,7 +29,7 @@ class MealManager: ObservableObject {
         } else {
             self.members = []
         }
-        
+        prepareSummary()
         observeMembers()
     }
     
