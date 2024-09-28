@@ -24,6 +24,7 @@
 		FABBBED32CA072C100046225 /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBED22CA072C100046225 /* DashBoardView.swift */; };
 		FABBBED52CA0892300046225 /* MembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBED42CA0892300046225 /* MembersView.swift */; };
 		FABBBED72CA08BC800046225 /* MealManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBED62CA08BC800046225 /* MealManager.swift */; };
+		FAFC20982CA7D13800D9C1DE /* CustomPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC20972CA7D13800D9C1DE /* CustomPopupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		FABBBED22CA072C100046225 /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
 		FABBBED42CA0892300046225 /* MembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersView.swift; sourceTree = "<group>"; };
 		FABBBED62CA08BC800046225 /* MealManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealManager.swift; sourceTree = "<group>"; };
+		FAFC20972CA7D13800D9C1DE /* CustomPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				FA45A3462CA1E2DD00043D6C /* GridView.swift */,
 				FA45A3442CA1DD0800043D6C /* AddBazarView.swift */,
 				FA45A33E2CA1D15300043D6C /* AddTransactionView.swift */,
+				FAFC20972CA7D13800D9C1DE /* CustomPopupView.swift */,
 				FA45A3422CA1D40100043D6C /* AddMealsView.swift */,
 				FA83A22D2CA72C600041B505 /* ToastView.swift */,
 			);
@@ -219,6 +222,7 @@
 				FAA37BDE2CA32B9C003243A0 /* Model.swift in Sources */,
 				FABBBED52CA0892300046225 /* MembersView.swift in Sources */,
 				FA45A33D2CA1B98500043D6C /* DashBoardSummaryView.swift in Sources */,
+				FAFC20982CA7D13800D9C1DE /* CustomPopupView.swift in Sources */,
 				FABBBEC52CA06D1500046225 /* MealManagementApp.swift in Sources */,
 				FA45A3352CA1B0E200043D6C /* MembersDetailsView.swift in Sources */,
 				FA45A3432CA1D40100043D6C /* AddMealsView.swift in Sources */,

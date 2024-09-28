@@ -12,7 +12,7 @@ class MealManager: ObservableObject {
     
     @Published var members: [Member]
     @Published var summary: Summary = Summary()
-    var currentMealRate: Double = 0
+    var currentMealRate: Double = 0.0
     
     private var totalBazar: Double = 0
     private var totalMeal: Double = 0
@@ -47,7 +47,7 @@ class MealManager: ObservableObject {
             totalMeal = totalMeal + member.totalMeal
         }
         
-        currentMealRate = totalBazar/Double(totalMeal)
+        currentMealRate = totalMeal > 0 ? totalBazar/Double(totalMeal) : 0
         
         summary.totalBazar = totalBazar
         summary.totalMeal = totalMeal

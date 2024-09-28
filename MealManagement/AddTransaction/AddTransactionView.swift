@@ -74,43 +74,7 @@ struct AddTransactionView: View {
                     .zIndex(1) // Make sure the background is behind the popup
                 
                 // Popup content
-                VStack {
-                    Text("Are you sure to Reset All Data?")
-                        .font(.headline)
-                        .padding()
-                    
-                    TextField("Type password", text: $inputText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    HStack {
-                        Button("Cancel") {
-                            showPopup = false
-                        }
-                        .font(.system(size: 16))
-                        .frame(width: 80, height: 40)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        
-                        Divider().frame(width: 20) // Space between buttons
-                        
-                        Button("OK") {
-                            print("OK pressed with input: \(inputText)")
-                            showPopup = false
-                            let isDeleted = mealManager.clearMemeberData(password: inputText)
-                            showToast = true
-                            
-                            message = isDeleted ? "Data reset successfully" : "InCorrect password"
-                        }
-                        .font(.system(size: 16))
-                        .frame(width: 80, height: 40)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                    }
-                    .padding(.top, 10)
-                }
+                CustomPopupView(showPopup: $showPopup, showToast: $showToast, message: $message)
                 .padding()
                 .frame(width: 300, height: 220)
                 .background(Color.white)

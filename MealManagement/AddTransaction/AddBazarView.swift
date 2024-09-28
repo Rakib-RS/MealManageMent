@@ -52,7 +52,19 @@ struct AddBazarView: View {
             // Input box for entering a number
             HStack {
                 TextField("Enter number", text: $inputNumber)
-                    .keyboardType(.numberPad) // Show numeric keyboard
+                    .keyboardType(.phonePad) // Show numeric keyboard
+                    .onChange(of: inputNumber) { newValue in
+                        // Allow only numbers and a decimal point
+                        let filtered = newValue.filter { "0123456789.".contains($0) }
+                        
+                        // Ensure there's only one decimal point
+                        let components = filtered.split(separator: ".")
+                        if components.count > 2 {
+                            inputNumber = String(components[0]) + "." + components[1]
+                        } else {
+                            inputNumber = filtered
+                        }
+                    }
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
