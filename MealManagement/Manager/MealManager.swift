@@ -73,7 +73,8 @@ class MealManager: ObservableObject {
             var mealCount = 0.0
             
             for day in 1...31 {
-                let key = "\(day - month)"
+                let key = "\(day) - \(month)"
+                
                 if let currentMeals = member.meals[key] {
                     mealCount += currentMeals
                 }

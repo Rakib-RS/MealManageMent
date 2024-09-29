@@ -68,7 +68,7 @@ struct AddMealsView: View {
                         
                         HStack {
                             // Minus button: Decreases meal count if it's greater than 0
-                            let key = "\(day-month)"
+                            let key = "\(day) - \(month)"
                             
                             
                             Button(action: {
