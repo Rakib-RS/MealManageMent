@@ -14,29 +14,29 @@ struct DashBoardListView: View {
         VStack {
             List {
                 Section {
-                    ForEach(mealManager.members) { member in
+                    ForEach(mealManager.membersVm) { membervm in
                         HStack(spacing: 5) {
-                            Text(member.name)
+                            Text(membervm.member.name)
                                 .frame(width: 50, alignment: .leading)
                                 .font(.system(size: 14, weight: .semibold))
                                 .lineLimit(2)
                             
-                            Text(String(format: "%0.1f", member.totalMeal))
+                            Text(String(format: "%0.1f", membervm.member.totalMeal))
                                 .frame(width: 30, alignment: .trailing)
                                 .font(.system(size: 14))
                             
-                            Text(String(format: "%0.1f", member.totalBazar))
+                            Text(String(format: "%0.1f", membervm.member.totalBazar))
                                 .frame(width: 70, alignment: .trailing)
                                 .font(.system(size: 14))
                             
-                            Text(String(format: "%0.1f", member.totalMealCost))
+                            Text(String(format: "%0.1f", membervm.member.totalMealCost))
                                 .frame(width: 70, alignment: .trailing)
                                 .font(.system(size: 14))
                             
-                            Text(String(format: "%0.1f", member.balance))
+                            Text(String(format: "%0.1f", membervm.member.balance))
                                 .frame(width: 70, alignment: .trailing)
                                 .font(.system(size: 14))
-                                .foregroundStyle( member.balance >= 0 ? Color.green : Color.red)
+                                .foregroundStyle( membervm.member.balance >= 0 ? Color.green : Color.red)
                             
                         }
                     }

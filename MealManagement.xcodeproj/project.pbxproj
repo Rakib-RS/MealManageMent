@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA34EF8E2CADBD0A0060E7BE /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */; };
 		FA45A3352CA1B0E200043D6C /* MembersDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */; };
 		FA45A3392CA1B33900043D6C /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3382CA1B33900043D6C /* AddMemberView.swift */; };
 		FA45A33B2CA1B8A000043D6C /* DashBoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
 		FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersDetailsView.swift; sourceTree = "<group>"; };
 		FA45A3382CA1B33900043D6C /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardListView.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		FAA37BDC2CA32B79003243A0 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */,
 				FABBBED62CA08BC800046225 /* MealManager.swift */,
 				FAA37BDD2CA32B9C003243A0 /* Model.swift */,
 			);
@@ -218,6 +221,7 @@
 				FA83A22E2CA72C600041B505 /* ToastView.swift in Sources */,
 				FABBBED32CA072C100046225 /* DashBoardView.swift in Sources */,
 				FABBBEC72CA06D1500046225 /* MainView.swift in Sources */,
+				FA34EF8E2CADBD0A0060E7BE /* MemberViewModel.swift in Sources */,
 				FA45A3452CA1DD0800043D6C /* AddBazarView.swift in Sources */,
 				FAA37BDE2CA32B9C003243A0 /* Model.swift in Sources */,
 				FABBBED52CA0892300046225 /* MembersView.swift in Sources */,

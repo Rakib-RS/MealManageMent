@@ -39,8 +39,9 @@ struct AddMemberView: View {
                 
                 // Save Button
                 Button(action: {
-                    let newMember = Member(name: name, phoneNumber: phoneNumber)
-                        mealManager.members.append(newMember)
+//                    let newMember = Member(name: name, phoneNumber: phoneNumber)
+//                        mealManager.members.append(newMember)
+                    mealManager.addMember(name: name, phoneNumber: phoneNumber)
                     
                     presentationMode.wrappedValue.dismiss()
                 }) {

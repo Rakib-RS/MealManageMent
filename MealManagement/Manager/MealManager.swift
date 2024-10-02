@@ -12,6 +12,7 @@ class MealManager: ObservableObject {
     static let shared = MealManager()
     
     @Published var members: [Member]
+    @Published var membersVm: [MemberViewModel] = []
     @Published var summary: Summary = Summary()
     @Published var currentMealRate: Double = 0.0
     
@@ -26,9 +27,15 @@ class MealManager: ObservableObject {
     private init() {
         if let members = MealManager.retrieveMembers() {
             self.members = members
+//            members.forEach { member in
+//                let memberVM = MemberViewModel(member: member, currentMealrate: $currentMealRate.eraseToAnyPublisher())
+//                self.membersVm.append(memberVM)
+//            }
         } else {
             self.members = []
         }
+        
+        //members = []
         prepareSummary()
         observeMembers()
     }
@@ -36,6 +43,12 @@ class MealManager: ObservableObject {
     func test() {
         members.append(.init(name: "Fuad", phoneNumber: "0123"))
         members.append(.init(name: "Amzad", phoneNumber: "0145"))
+        
+        let memberVM = MemberViewModel(member: members[0], currentMealrate: $currentMealRate.eraseToAnyPublisher())
+        let memberVM1 = MemberViewModel(member: members[1], currentMealrate: $currentMealRate.eraseToAnyPublisher())
+        membersVm.append(memberVM)
+        membersVm.append(memberVM1)
+        
     }
     
     private func prepareSummary() {
@@ -53,10 +66,16 @@ class MealManager: ObservableObject {
             }
             
             currentMealRate = totalMeal > 0 ? totalBazar/Double(totalMeal) : 0
+            print("current mealrate: \(currentMealRate)")
             
             summary.totalBazar = totalBazar
             summary.totalMeal = totalMeal
             summary.mealRate = currentMealRate
+            
+            // Update membersVm when members change
+            self.membersVm = self.members.map { member in
+                MemberViewModel(member: member, currentMealrate: self.$currentMealRate.eraseToAnyPublisher())
+            }
         }
     }
     
@@ -114,6 +133,14 @@ class MealManager: ObservableObject {
             print("data retrieve failure error: \(error)")
             return nil
         }
+    }
+    
+    func addMember(name: String, phoneNumber: String) {
+        let member = Member(name: name, phoneNumber: phoneNumber)
+        members.append(member)
+        membersVm.append(MemberViewModel(member: member, currentMealrate: $currentMealRate.eraseToAnyPublisher()))
+        
+        saveInDefault()
     }
     
     func addBazar(id: UUID, amount: Double) {

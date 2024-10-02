@@ -14,7 +14,7 @@ struct Member: Identifiable, Codable, Equatable {
     var todayMeal: Double = 0
     var totalMeal: Double = 0
     var totalBazar: Double = 0
-    var totalMealCost: Double { return MealManager.shared.currentMealRate * Double(totalMeal) }
+    var totalMealCost: Double  = 0
     var meals: [String: Double] = [:] //key: day-month
     var balance: Double { return totalBazar - totalMealCost }
     
