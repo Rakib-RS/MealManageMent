@@ -54,7 +54,7 @@ struct DateMemberMatrixView: View {
                             
                             let day = Calendar.current.component(.day, from: date)
                             let month = Calendar.current.component(.month, from: date)
-                            let key = "\(day-month)"
+                            let key = "\(day) - \(month)"
                             Text("\(member.meals[key] ?? 0)")
                                 .frame(width: 100)
                                 .background(Color.blue.opacity(0.2))

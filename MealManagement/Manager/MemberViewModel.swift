@@ -10,7 +10,11 @@ import Foundation
 
 class MemberViewModel: ObservableObject, Identifiable {
     var id: UUID
+    
     @Published var member: Member
+    
+    @Published var totalMeal = 0.0
+    @Published var totalBazar = 0.0
     
     private var currentMealrate: AnyPublisher<Double, Never>
     private var cancellables: Set<AnyCancellable> = []
