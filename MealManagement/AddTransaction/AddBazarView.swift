@@ -19,6 +19,7 @@ struct AddBazarView: View {
     
     @State private var selectedMember: Member? = nil
     @State private var inputNumber: String = ""
+    @State private var isLoading: Bool = false
     
     var body: some View {
         VStack {
@@ -50,39 +51,56 @@ struct AddBazarView: View {
             .padding()
             
             // Input box for entering a number
-            HStack {
-                TextField("Enter number", text: $inputNumber)
-                    .keyboardType(.phonePad) // Show numeric keyboard
-                    .onChange(of: inputNumber) { newValue in
-                        // Allow only numbers and a decimal point
-                        let filtered = newValue.filter { "0123456789.".contains($0) }
-                        
-                        // Ensure there's only one decimal point
-                        let components = filtered.split(separator: ".")
-                        if components.count > 2 {
-                            inputNumber = String(components[0]) + "." + components[1]
-                        } else {
-                            inputNumber = filtered
+            VStack {
+                HStack {
+                    Text("Amount:")
+                    TextField("Enter number", text: $inputNumber)
+                        .keyboardType(.phonePad) // Show numeric keyboard
+                        .onChange(of: inputNumber) { newValue in
+                            // Allow only numbers and a decimal point
+                            let filtered = newValue.filter { "0123456789.".contains($0) }
+                            
+                            // Ensure there's only one decimal point
+                            let components = filtered.split(separator: ".")
+                            if components.count > 2 {
+                                inputNumber = String(components[0]) + "." + components[1]
+                            } else {
+                                inputNumber = filtered
+                            }
                         }
-                    }
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                }
                 
                 Button(action: {
-                    // Handle the action when the number is entered
+                    isLoading = true
                     if let number = Double(inputNumber), let member = selectedMember {
                         // Use the number and selected member as needed
                         print("Selected member: \(member.name), Number: \(number)")
-                        mealManager.addBazar(id: member.id, amount: number)
-                        
-                        presentationMode.wrappedValue.dismiss()
+                        Task {
+                            let result = await mealManager.addBazar(id: member.id, amount: number)
+                            
+                            isLoading = false
+                            if result {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
                     }
                 }) {
-                    Text("Submit")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.blue)
+                            .frame(width: 300, height: 50)
+                        
+                        if isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        } else {
+                            Text("Submit")
+                                .foregroundColor(.white)
+                                .bold()
+                        }
+                    }
                 }
             }
             .padding()

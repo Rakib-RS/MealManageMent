@@ -11,6 +11,7 @@ struct CustomPopupView: View {
     @State var mealManager = MealManager.shared
     @State var inputText: String = ""
     @State var isPasswordVisible: Bool = false
+    @State private var isDeleted: Bool = false
     
     @Binding var showPopup: Bool
     @Binding var showToast: Bool
@@ -18,7 +19,7 @@ struct CustomPopupView: View {
     
     var body: some View {
         VStack {
-           // Spacer()
+            // Spacer()
             Text("Are you sure to Reset All Data?")
                 .font(.headline)
                 .padding()
@@ -57,11 +58,16 @@ struct CustomPopupView: View {
                 Button("OK") {
                     print("OK pressed with input: \(inputText)")
                     showPopup = false
-                    let isDeleted = mealManager.clearMemeberData(password: inputText)
-                    showToast = true
-                    
-                    message = isDeleted ? "Data reset successfully" : "InCorrect password"
-                    inputText = ""
+                    Task {
+                        isDeleted = await mealManager.clearMemeberData(password: inputText)
+                        
+                        DispatchQueue.main.async {
+                            showToast = true
+                            
+                            message =  isDeleted ? "Data reset successfully" : "InCorrect password"
+                            inputText = ""
+                        }
+                    }
                 }
                 .font(.system(size: 16))
                 .frame(width: 80, height: 40)

@@ -30,6 +30,22 @@ struct Member: Identifiable, Codable, Equatable {
     }
 }
 
+extension Member {
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id.uuidString,
+            "name": name,
+            "phoneNumber": phoneNumber,
+            "todayMeal": todayMeal,
+            "totalMeal": totalMeal,
+            "totalBazar": totalBazar,
+            "totalMealCost": totalMealCost,
+            "meals": meals  // Stored as a dictionary
+        ]
+    }
+}
+
+
 struct Summary {
     var totalBazar: Double = 0
     var totalMeal: Double = 0

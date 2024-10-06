@@ -16,7 +16,8 @@ struct AddMemberView: View {
     
     @State private var name: String = ""
     @State private var phoneNumber: String = ""
-
+    @State private var isLoading: Bool = false
+    
     var body: some View {
         ZStack {
             Color(.systemGray6).ignoresSafeArea() // Background color
@@ -39,20 +40,30 @@ struct AddMemberView: View {
                 
                 // Save Button
                 Button(action: {
-//                    let newMember = Member(name: name, phoneNumber: phoneNumber)
-//                        mealManager.members.append(newMember)
-                    mealManager.addMember(name: name, phoneNumber: phoneNumber)
+                    isLoading = true
+                    Task {
+                        let result = await mealManager.addMember(name: name, phoneNumber: phoneNumber)
+                        isLoading = false
+                        if result {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
                     
-                    presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Save")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(12)
-                        .shadow(radius: 10)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.blue)
+                            .frame(width: 300, height: 50)
+                        
+                        if isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        } else {
+                            Text("Submit")
+                                .foregroundColor(.white)
+                                .bold()
+                        }
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 40)

@@ -10,6 +10,8 @@ import SwiftUI
 struct DashBoardView: View {
     @ObservedObject var mealManager = MealManager.shared
     
+    @State private var isLoading: Bool = false
+    
     var body: some View {
         ZStack {
             Color.cyan.ignoresSafeArea()
@@ -17,12 +19,32 @@ struct DashBoardView: View {
                 DashBoardSummaryView(summary: mealManager.summary)
                 Spacer()
                 DashBoardListView(mealManager: mealManager)
+                ZStack {
+                    
+                }
+            }
+            
+            if isLoading {
+                ZStack {
+                    Color.black.opacity(0.3).ignoresSafeArea()  // Semi-transparent background
+                    ProgressView("Fetching members...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5)  // Make the spinner larger
+                        .foregroundColor(.white)
+                }
             }
             
         }
         .tabItem {
             Image(systemName: "house.fill")
             Text("Dashboard")
+        }
+        .onAppear {
+            Task {
+                isLoading = true
+                await mealManager.fetchAllMembers()
+                isLoading = false
+            }
         }
     }
 }

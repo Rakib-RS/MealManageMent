@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA1307F62CB1BD5D00D20717 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1307F52CB1BD5D00D20717 /* GoogleService-Info.plist */; };
 		FA34EF8E2CADBD0A0060E7BE /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */; };
 		FA45A3352CA1B0E200043D6C /* MembersDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */; };
 		FA45A3392CA1B33900043D6C /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3382CA1B33900043D6C /* AddMemberView.swift */; };
@@ -17,6 +18,8 @@
 		FA45A3452CA1DD0800043D6C /* AddBazarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3442CA1DD0800043D6C /* AddBazarView.swift */; };
 		FA45A3472CA1E2DD00043D6C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3462CA1E2DD00043D6C /* GridView.swift */; };
 		FA83A22E2CA72C600041B505 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA83A22D2CA72C600041B505 /* ToastView.swift */; };
+		FA97020D2CB1C1E9008EB65F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FA97020C2CB1C1E9008EB65F /* FirebaseDatabase */; };
+		FA97020F2CB1C1E9008EB65F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FA97020E2CB1C1E9008EB65F /* FirebaseFirestore */; };
 		FAA37BDE2CA32B9C003243A0 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA37BDD2CA32B9C003243A0 /* Model.swift */; };
 		FABBBEC52CA06D1500046225 /* MealManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBEC42CA06D1500046225 /* MealManagementApp.swift */; };
 		FABBBEC72CA06D1500046225 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABBBEC62CA06D1500046225 /* MainView.swift */; };
@@ -29,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA1307F42CB1AB1C00D20717 /* MealManagement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MealManagement.entitlements; sourceTree = "<group>"; };
+		FA1307F52CB1BD5D00D20717 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
 		FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersDetailsView.swift; sourceTree = "<group>"; };
 		FA45A3382CA1B33900043D6C /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
@@ -56,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA97020D2CB1C1E9008EB65F /* FirebaseDatabase in Frameworks */,
+				FA97020F2CB1C1E9008EB65F /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +108,7 @@
 				FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */,
 				FABBBED62CA08BC800046225 /* MealManager.swift */,
 				FAA37BDD2CA32B9C003243A0 /* Model.swift */,
+				FA1307F52CB1BD5D00D20717 /* GoogleService-Info.plist */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -124,6 +132,7 @@
 		FABBBEC32CA06D1500046225 /* MealManagement */ = {
 			isa = PBXGroup;
 			children = (
+				FA1307F42CB1AB1C00D20717 /* MealManagement.entitlements */,
 				FABBBEC42CA06D1500046225 /* MealManagementApp.swift */,
 				FAA37BDB2CA32AEB003243A0 /* Home */,
 				FABBBEC62CA06D1500046225 /* MainView.swift */,
@@ -188,6 +197,9 @@
 				Base,
 			);
 			mainGroup = FABBBEB82CA06D1500046225;
+			packageReferences = (
+				FA97020B2CB1C1E9008EB65F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = FABBBEC22CA06D1500046225 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,6 +216,7 @@
 			files = (
 				FABBBECC2CA06D1600046225 /* Preview Assets.xcassets in Resources */,
 				FABBBEC92CA06D1600046225 /* Assets.xcassets in Resources */,
+				FA1307F62CB1BD5D00D20717 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +369,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MealManagement/MealManagement.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MealManagement/Preview Content\"";
@@ -372,7 +386,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = rakib.MealManagement;
+				PRODUCT_BUNDLE_IDENTIFIER = rakib.rscse.MealManagement;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -385,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MealManagement/MealManagement.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MealManagement/Preview Content\"";
@@ -401,7 +416,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = rakib.MealManagement;
+				PRODUCT_BUNDLE_IDENTIFIER = rakib.rscse.MealManagement;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -431,6 +446,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA97020B2CB1C1E9008EB65F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA97020C2CB1C1E9008EB65F /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA97020B2CB1C1E9008EB65F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		FA97020E2CB1C1E9008EB65F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA97020B2CB1C1E9008EB65F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FABBBEB92CA06D1500046225 /* Project object */;
 }

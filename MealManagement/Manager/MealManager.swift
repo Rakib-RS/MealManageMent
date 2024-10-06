@@ -5,6 +5,7 @@
 //  Created by Rakib on 22/9/24.
 //
 
+import FirebaseFirestore
 import Foundation
 import Combine
 
@@ -16,29 +17,36 @@ class MealManager: ObservableObject {
     @Published var summary: Summary = Summary()
     @Published var currentMealRate: Double = 0.0
     
+    private var membersPublisher = PassthroughSubject<[Member], Never>()
+    
     private var totalBazar: Double = 0
     private var totalMeal: Double = 0
     private var password: String = "honda503"
     private var cancellables = Set<AnyCancellable>()
     
+    private let db = Firestore.firestore()
+    private let membersCollection = Firestore.firestore().collection("members")
+    
     private static let defaults = UserDefaults.standard
     private static let membersKey = "membersKey"
     
     private init() {
-        if let members = MealManager.retrieveMembers() {
-            self.members = members
-//            members.forEach { member in
-//                let memberVM = MemberViewModel(member: member, currentMealrate: $currentMealRate.eraseToAnyPublisher())
-//                self.membersVm.append(memberVM)
-//            }
-        } else {
-            self.members = []
-        }
-        
-        //members = []
-        prepareSummary()
-        observeMembers()
+        members = []
+        startObserving()
     }
+    
+    private func startObserving() {
+        membersPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] members in
+                print("[MealManager] fetched members: \(members)")
+                
+                self?.members = members
+                self?.prepareSummary()
+            }.store(in: &cancellables)
+    }
+    
+    
     
     func test() {
         members.append(.init(name: "Fuad", phoneNumber: "0123"))
@@ -135,29 +143,87 @@ class MealManager: ObservableObject {
         }
     }
     
-    func addMember(name: String, phoneNumber: String) {
-        let member = Member(name: name, phoneNumber: phoneNumber)
-        members.append(member)
-        membersVm.append(MemberViewModel(member: member, currentMealrate: $currentMealRate.eraseToAnyPublisher()))
-        
-        saveInDefault()
-    }
-    
-    func addBazar(id: UUID, amount: Double) {
-        members = members.map { member in
-            if member.id == id {
-                var updateMember = member
-                updateMember.totalBazar = updateMember.totalBazar + amount
-                return updateMember
+    func updateMemebr(member: Member) {
+        let membersCollection = db.collection("members")
+        membersCollection.document(member.id.uuidString).updateData(member.toDictionary()) { error in
+            if let error {
+                print("error updating member: \(error)")
             } else {
-                return member
+                print("member updated successfully")
             }
         }
+    }
+}
+
+//server call
+extension MealManager {
+    func addMember(name: String, phoneNumber: String) async -> Bool {
+        let member = Member(name: name, phoneNumber: phoneNumber)
         
-        saveInDefault()
+        return await withCheckedContinuation { continuation in
+            membersCollection.document(member.id.uuidString).setData(member.toDictionary()) { error in
+                if let error {
+                    print("[MealManager] add Member error: \(error)")
+                    continuation.resume(returning: false)
+                } else {
+                    continuation.resume(returning: true)
+                    self.members.append(member)
+                    self.membersVm.append(MemberViewModel(member: member, currentMealrate: self.$currentMealRate.eraseToAnyPublisher()))
+                }
+            }
+        }
     }
     
-    func clearMemeberData(password: String) -> Bool {
+    func addBazar(id: UUID, amount: Double) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            membersCollection.document(id.uuidString).updateData(["totalBazar": FieldValue.increment(amount)]) { error in
+                if let error {
+                    print("[MealManager] add Bazar error: \(error)")
+                    continuation.resume(returning: false)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
+    
+    func updateAllMembersMeals() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            Task {
+                await withTaskGroup(of: Bool.self) { group in
+                    var allUpdateSuccess: Bool = true
+                    
+                    members.forEach { member in
+                        group.addTask {
+                            return await self.updateMeals(member: member)
+                        }
+                    }
+                    
+                    for await result in group {
+                        if !result { allUpdateSuccess = false }
+                    }
+                    continuation.resume(returning: allUpdateSuccess)
+                }
+            }
+        }
+    }
+    
+    private func updateMeals(member: Member) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            membersCollection.document(member.id.uuidString).updateData(
+                ["meals": member.meals]
+            ) { error in
+                if let error {
+                    print("[MealManager] update meals for\(member.id.uuidString) error: \(error)")
+                    continuation.resume(returning: false)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
+    
+    func clearMemeberData(password: String) async -> Bool {
         if password != self.password {
             return false
         }
@@ -169,7 +235,83 @@ class MealManager: ObservableObject {
             members[i].totalMeal = 0.0
         }
         
-        prepareSummary()
-        return true
+        return await withCheckedContinuation { continuation in
+            Task {
+                await withTaskGroup(of: Bool.self) { group in
+                    var isResetAll: Bool = true
+                    
+                    members.forEach { member in
+                        group.addTask {
+                            await self.resetMember(member: member)
+                        }
+                    }
+                    
+                    for await result in group {
+                        if !result {
+                            isResetAll = false
+                        }
+                    }
+                    continuation.resume(returning: isResetAll)
+                }
+            }
+        }
     }
+    
+    private func resetMember(member: Member) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            membersCollection.document(member.id.uuidString).updateData(member.toDictionary()) { error in
+                    if let error {
+                    print("[MealManager] reset member error: \(error)")
+                    continuation.resume(returning: false)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
+    
+    func fetchAllMembers() async {
+        let fetchedMembers: [Member] = await withCheckedContinuation { continuation in
+            membersCollection.getDocuments { (snapshot, error) in
+                if let error {
+                    print("Error fetching members: \(error)")
+                    continuation.resume(returning: [])
+                } else {
+                    guard let documents = snapshot?.documents else {
+                        continuation.resume(returning: [])
+                        return
+                    }
+                    
+                    let members: [Member] = documents.compactMap { document in
+                        let data = document.data()
+                        
+                        let idString = data["id"] as? String ?? UUID().uuidString
+                        let id = UUID(uuidString: idString) ?? UUID()
+                        let name = data["name"] as? String ?? "Unknown"
+                        let phoneNumber = data["phoneNumber"] as? String ?? "No Phone"
+                        let todayMeal = data["todayMeal"] as? Double ?? 0.0
+                        let totalMeal = data["totalMeal"] as? Double ?? 0.0
+                        let totalBazar = data["totalBazar"] as? Double ?? 0.0
+                        let totalMealCost = data["totalMealCost"] as? Double ?? 0.0
+                        let meals = data["meals"] as? [String: Double] ?? [:]
+                        
+                        return Member(
+                            id: id,
+                            name: name,
+                            phoneNumber: phoneNumber,
+                            todayMeal: todayMeal,
+                            totalMeal: totalMeal,
+                            totalBazar: totalBazar,
+                            totalMealCost: totalMealCost,
+                            meals: meals
+                        )
+                    }
+                    
+                    continuation.resume(returning: members)
+                }
+            }
+        }
+        membersPublisher.send(fetchedMembers)
+    }
+    
 }

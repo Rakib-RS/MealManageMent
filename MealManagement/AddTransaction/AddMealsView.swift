@@ -13,6 +13,7 @@ struct AddMealsView: View {
     
     @State var date: Date = Date()
     @State private var isOneSelected: Bool = true
+    @State private var isLoading: Bool = false
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -112,16 +113,30 @@ struct AddMealsView: View {
             Spacer()
             // Save Button
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
+                Task {
+                    isLoading = true
+                    let result = await mealManager.updateAllMembersMeals()
+                    isLoading = false
+                    
+                    if result {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }) {
-                Text("Done")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(12)
-                    .shadow(radius: 10)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.blue)
+                        .frame(width: 300, height: 50)
+                    
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    } else {
+                        Text("Submit")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
