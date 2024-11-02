@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0671052CD51D3B00006651 /* MonthPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0671042CD51D3B00006651 /* MonthPickerView.swift */; };
 		FA1307F62CB1BD5D00D20717 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1307F52CB1BD5D00D20717 /* GoogleService-Info.plist */; };
 		FA34EF8E2CADBD0A0060E7BE /* MemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */; };
 		FA45A3352CA1B0E200043D6C /* MembersDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA45A3342CA1B0E200043D6C /* MembersDetailsView.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0671042CD51D3B00006651 /* MonthPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPickerView.swift; sourceTree = "<group>"; };
 		FA1307F42CB1AB1C00D20717 /* MealManagement.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MealManagement.entitlements; sourceTree = "<group>"; };
 		FA1307F52CB1BD5D00D20717 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA34EF8D2CADBCF40060E7BE /* MemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewModel.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				FABBBED22CA072C100046225 /* DashBoardView.swift */,
 				FA45A33C2CA1B98500043D6C /* DashBoardSummaryView.swift */,
+				FA0671042CD51D3B00006651 /* MonthPickerView.swift */,
 				FA45A33A2CA1B8A000043D6C /* DashBoardListView.swift */,
 			);
 			path = Home;
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA45A33B2CA1B8A000043D6C /* DashBoardListView.swift in Sources */,
+				FA0671052CD51D3B00006651 /* MonthPickerView.swift in Sources */,
 				FABBBED72CA08BC800046225 /* MealManager.swift in Sources */,
 				FA45A3392CA1B33900043D6C /* AddMemberView.swift in Sources */,
 				FA45A3472CA1E2DD00043D6C /* GridView.swift in Sources */,

@@ -16,6 +16,7 @@ class MealManager: ObservableObject {
     @Published var membersVm: [MemberViewModel] = []
     @Published var summary: Summary = Summary()
     @Published var currentMealRate: Double = 0.0
+    @Published var isLoading: Bool = false
     
     private var membersPublisher = PassthroughSubject<[Member], Never>()
     
@@ -29,6 +30,8 @@ class MealManager: ObservableObject {
     
     private static let defaults = UserDefaults.standard
     private static let membersKey = "membersKey"
+    
+    private var selectedMonthIndex = Calendar.current.component(.month, from: Date())
     
     private init() {
         members = []
@@ -100,7 +103,7 @@ class MealManager: ObservableObject {
             var mealCount = 0.0
             
             for day in 1...31 {
-                let key = "\(day) - \(month)"
+                let key = "\(day) - \(selectedMonthIndex)"
                 
                 if let currentMeals = member.meals[key] {
                     mealCount += currentMeals
@@ -140,6 +143,15 @@ class MealManager: ObservableObject {
         } catch {
             print("data retrieve failure error: \(error)")
             return nil
+        }
+    }
+    
+    func updateMonth(index: Int) {
+        selectedMonthIndex = index
+        Task {
+            isLoading = true
+            await fetchAllMembers()
+            isLoading = false
         }
     }
     
@@ -271,6 +283,7 @@ extension MealManager {
     }
     
     func fetchAllMembers() async {
+        isLoading = true
         let fetchedMembers: [Member] = await withCheckedContinuation { continuation in
             membersCollection.getDocuments { (snapshot, error) in
                 if let error {
@@ -306,7 +319,7 @@ extension MealManager {
                             meals: meals
                         )
                     }
-                    
+                    self.isLoading = false
                     continuation.resume(returning: members)
                 }
             }

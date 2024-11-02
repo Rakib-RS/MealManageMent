@@ -24,7 +24,7 @@ struct DashBoardView: View {
                 }
             }
             
-            if isLoading {
+            if mealManager.isLoading {
                 ZStack {
                     Color.black.opacity(0.3).ignoresSafeArea()  // Semi-transparent background
                     ProgressView("Fetching members...")
@@ -41,10 +41,9 @@ struct DashBoardView: View {
         }
         .onAppear {
             Task {
-                isLoading = true
                 await mealManager.fetchAllMembers()
-                isLoading = false
             }
+            
         }
     }
 }

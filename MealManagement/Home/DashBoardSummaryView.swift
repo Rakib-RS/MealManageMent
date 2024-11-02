@@ -21,12 +21,7 @@ struct DashBoardSummaryView: View {
             //Color.gray.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("Date:")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    Text(formattedDate)
-                        .font(.headline)
-                        .foregroundColor(.secondary)
+                    MonthPickerView()
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
