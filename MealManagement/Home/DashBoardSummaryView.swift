@@ -10,76 +10,48 @@ import SwiftUI
 struct DashBoardSummaryView: View {
     var summary: Summary
     
-    var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter.string(from: Date()) // Current date
-    }
-    
     var body: some View {
         ZStack {
-            //Color.gray.ignoresSafeArea()
-            VStack {
+            VStack(spacing: 5) {
                 HStack {
                     MonthPickerView()
                 }
-                .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                //.background(Color.white)
-                .cornerRadius(10)
-                //.shadow(radius: 5)
                 .padding(.horizontal, 20)
                 
-                HStack {
-                    Text("Total Bazar:")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    Text(currency: summary.totalBazar, currencyCode: "BDT", locale: Locale(identifier: "en_BD"))
-                        .font(.title)
-                        .foregroundColor(.secondary)
+                Group {
+                    summaryRow(title: "Total Bazar:", value: currencyText(summary.totalBazar))
+                    summaryRow(title: "Total Meal:", value: Text(String(format: "%0.1f", summary.totalMeal)))
+                    summaryRow(title: "Current Meal Rate:", value: currencyText(summary.mealRate))
                 }
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                //.background(Color.white)
-                .cornerRadius(10)
-                //.shadow(radius: 5)
                 .padding(.horizontal, 20)
-                
-                HStack {
-                    Text("Total Meal:")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    Text(String(format: "%0.1f", summary.totalMeal))
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-                }
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                //.background(Color.white)
-                .cornerRadius(10)
-                //.shadow(radius: 5)
-                .padding(.horizontal, 20)
-                
-                HStack {
-                    Text("Current Meal Rate:")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    Text(currency: summary.mealRate, currencyCode: "BDT", locale: Locale(identifier: "en_BD"))
-                        .font(.title)
-                        .foregroundColor(.secondary)
-                }
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                //.background(Color.white)
-                .cornerRadius(10)
-                //.shadow(radius: 5)
-                .padding(.horizontal, 20)
-                
-                
             }
         }
     }
+    
+    func summaryRow(title: String, value: Text) -> some View {
+        HStack {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.secondary)
+            value
+                .font(.title2)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.white)
+                .shadow(radius: 5)
+        )
+    }
+    
+    func currencyText(_ amount: Double) -> Text {
+        Text(currency: amount, currencyCode: "BDT", locale: Locale(identifier: "en_BD"))
+    }
 }
+
 
 struct DashBoardSummaryView_Previews: PreviewProvider {
     static var previews: some View {

@@ -18,12 +18,14 @@ struct MonthPickerView: View {
     
     var body: some View {
         VStack {
-            Text("Selected Month: \(months[selectedMonthIndex - 1])")
-                .padding()
-            
-            Picker("Select Month", selection: $selectedMonthIndex) {
-                ForEach(1...months.count, id: \.self) { index in
-                    Text(months[index - 1]).tag(index)
+            HStack {
+                Text("Selected Month: ")
+                    .padding()
+                
+                Picker("Select Month", selection: $selectedMonthIndex) {
+                    ForEach(1...months.count, id: \.self) { index in
+                        Text(months[index - 1]).tag(index)
+                    }
                 }
             }
             .pickerStyle(.menu)
